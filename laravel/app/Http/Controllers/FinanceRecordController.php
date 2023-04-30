@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Income;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class IncomeController extends Controller
+class FinanceRecordController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        // dd("test");
+        return Inertia::render('Income');
     }
 
     /**

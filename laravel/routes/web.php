@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FinanceRecordController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,5 +39,7 @@ Route::middleware([
     Route::get('/income', function () {
         return Inertia::render('Income');
     })->name('income');
+
+    Route::resource('/finance', FinanceRecordController::class);
     
 });
