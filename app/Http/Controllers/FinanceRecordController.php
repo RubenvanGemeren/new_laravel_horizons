@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FinanceRecord;
 use App\Models\Income;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,8 +14,8 @@ class FinanceRecordController extends Controller
      */
     public function index()
     {
-        // dd("test");
-        return Inertia::render('Income');
+        $financeRecords = FinanceRecord::get();
+        return Inertia::render('Finance', compact(['financeRecords']));
     }
 
     /**
