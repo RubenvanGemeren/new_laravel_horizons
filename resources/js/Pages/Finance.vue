@@ -1,6 +1,23 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+    import AppLayout from '@/Layouts/AppLayout.vue';
+    import Welcome from '@/Components/Welcome.vue';
+    import FinanceList from '@/Components/FinanceList.vue';
+    import { defineProps } from 'vue';
+
+    const props = defineProps({
+        records: {
+            type: Array,
+            required: true,
+        },
+    });
+
+    const records = props.records;
+
+    console.log(records.id);
+
+    // headers = records[0].keys();
+    // console.log(headers);
+
 </script>
 
 <template>
@@ -14,8 +31,7 @@ import Welcome from '@/Components/Welcome.vue';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                    <h1></h1>
-                    <Welcome />
+                    <FinanceList :records="records" />
                 </div>
             </div>
         </div>
