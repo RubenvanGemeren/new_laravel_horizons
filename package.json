@@ -17,5 +17,13 @@
         "tailwindcss": "^3.1.0",
         "vite": "^4.0.0",
         "vue": "^3.2.31"
+    },
+    "dependencies": {
+        "datatables.net-buttons-dt": "^2.3.6",
+        "datatables.net-dt": "^1.13.4",
+        "datatables.net-responsive-dt": "^2.4.1",
+        "datatables.net-select-dt": "^1.6.2",
+        "datatables.net-vue3": "^2.1.0",
+        "jszip": "^3.10.1"
     }
 }
