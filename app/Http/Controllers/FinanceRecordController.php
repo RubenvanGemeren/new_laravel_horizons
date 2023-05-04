@@ -13,9 +13,10 @@ class FinanceRecordController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $financeRecords = FinanceRecord::get();
-        return Inertia::render('Finance', compact(['financeRecords']));
+    {   
+        return Inertia::render('Finance', [
+            'records' => FinanceRecord::get()
+        ]);
     }
 
     /**
