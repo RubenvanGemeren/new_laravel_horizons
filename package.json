@@ -24,6 +24,9 @@
         "datatables.net-responsive-dt": "^2.4.1",
         "datatables.net-select-dt": "^1.6.2",
         "datatables.net-vue3": "^2.1.0",
-        "jszip": "^3.10.1"
+        "jquery": "^3.6.4",
+        "jszip": "^3.10.1",
+        "toastr": "^2.1.4",
+        "vue-toastification": "^2.0.0-rc.5"
     }
 }
