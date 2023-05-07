@@ -32,7 +32,33 @@ class FinanceRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $validated = $request->validate([
+                'date' => ['required', 'date'],
+                'name' => ['required', 'max:200'],
+                'type' => ['required', 'string'],
+                'category' => ['required', 'string'],
+                'description' => ['nullable', 'max:500'],
+                'amount' => ['required', 'decimal:0,2'],
+                'effective_date' => ['required', 'date'],
+            ]);
+
+            // Turn amount to cents
+            $validated['amount'] = intval(floatval($validated['amount']) * 100);
+
+            // Turn dates in timetamps
+            $validated['date'] = date('Y-m-d H:i:s', strtotime($validated['date']));
+            $validated['effective_date'] = date('Y-m-d H:i:s', strtotime($validated['effective_date']));
+
+            // Create record
+            FinanceRecord::create($validated);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        } finally {
+            // Redirect and hope for toast :P
+
+        }
     }
 
     /**
