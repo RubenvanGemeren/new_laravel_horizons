@@ -5,8 +5,17 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+
+const options = {
+    transition: "Vue-Toastification__slideBlurred",
+    maxToasts: 5,
+    newestOnTop: true
+};
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -15,6 +24,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(Toast, options)
             .mount(el);
     },
     progress: {
