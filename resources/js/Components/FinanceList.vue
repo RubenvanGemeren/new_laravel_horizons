@@ -7,19 +7,23 @@
     // import 'datatables.net-buttons/js/buttons.html5.mjs';
     import 'datatables.net-responsive-dt';
     import 'datatables.net-select-dt';
+    import { computed } from 'vue';
 
-    
     DataTable.use(DataTablesCore);
 
-    const props = defineProps({ records: Array });
+    const props = defineProps({ records: Array, columns: Array });
 
-    var dataSet = [];
+    const data = computed(() => {
+        var data = [];
 
-    for (const record of props.records.values()) 
-    {
-        dataSet.push(Object.values(record));
-    }
+        for (const record of props.records) {
+            data.push(Object.values(record));
+        }
 
+        return data;
+
+    })
+    
 </script>
 
 <template>
@@ -44,12 +48,7 @@
 
                 <!-- RECORDS GO HERE -->
                 <div style="background-color: white; padding: 1%;">
-                    <DataTable :data="dataSet" class="display">
-                        <thead>
-                            <tr>
-                                <th v-for="(record, index) in records[0]">{{ index }}</th>
-                            </tr>
-                        </thead>
+                    <DataTable :columns="columns" class="display">
                     </DataTable>
                 </div>
                 
