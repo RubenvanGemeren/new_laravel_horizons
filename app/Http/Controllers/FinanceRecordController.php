@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FinanceRecord;
 use App\Models\Income;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class FinanceRecordController extends Controller
@@ -14,8 +15,13 @@ class FinanceRecordController extends Controller
      */
     public function index()
     {   
+
+        $columns = ['date', 'name', 'type', 'category', 'description', 'amount', 'effective_date'];
+
         return Inertia::render('Finance', [
-            'records' => FinanceRecord::get()
+            'records' => FinanceRecord::select($columns)->get(),
+            'columns' => ['Date', 'Name', 'Type', 'Category', 'Description', 'Amount', 'Effective Date'],
+            'toast' => session()->get('toast'),
         ]);
     }
 
@@ -33,7 +39,6 @@ class FinanceRecordController extends Controller
     public function store(Request $request)
     {
         try {
-
             $validated = $request->validate([
                 'date' => ['required', 'date'],
                 'name' => ['required', 'max:200'],
@@ -52,12 +57,20 @@ class FinanceRecordController extends Controller
             $validated['effective_date'] = date('Y-m-d H:i:s', strtotime($validated['effective_date']));
 
             // Create record
-            FinanceRecord::create($validated);
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-        } finally {
-            // Redirect and hope for toast :P
+            FinanceRecord::updateOrCreate($validated);
+            
+            return redirect()->back()->with('toast', ['success', 'The record has been added.']);
 
+            // return to_route('finance.index')->with('test', 'This is a test string');
+            // Redirect to the index page with the updated records
+            // dd(redirect()->route('finance.index')->with('success', 'Record created successfully.')->with('records', $records));
+
+            return to_route('finance.index');
+            return Inertia::location(route('finance.index'));
+            // return route('finance.index'); //->with('test', 'Record created successfully.')->with('records', $records);
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('toast', ['warning', 'The record has NOT been added, pleas try again.']);
         }
     }
 
