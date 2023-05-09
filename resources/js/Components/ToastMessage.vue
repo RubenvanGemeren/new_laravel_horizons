@@ -1,21 +1,37 @@
 <script setup>
 import { useToast } from "vue-toastification";
-// Import the CSS or use your own!
-import "vue-toastification/dist/index.css";
 
-defineProps({
-    value: String,
-    type: String,
+const props = defineProps({
+    message: {
+      type: String,
+      required: false
+    },
+    severity: {
+      type: String,
+      required: false
+    }
+    
 });
 
 // Get toast interface
 const toast = useToast();
 
 // or with options
-toast.success("My toast content", {
-        timeout: 2000
-      });
-
+toast(props.message, {
+  type: props.severity,
+  position: "top-right",
+  timeout: 2971,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  draggablePercent: 0.6,
+  showCloseButtonOnHover: true,
+  hideProgressBar: false,
+  closeButton: "button",
+  icon: true,
+  rtl: false
+});
 
 </script>
 
