@@ -30,6 +30,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+    Route::resource('/finance', FinanceRecordController::class);
+
     // Home route
     Route::get('/home', function () {
         return Inertia::render('Home');
@@ -39,7 +42,5 @@ Route::middleware([
     Route::get('/income', function () {
         return Inertia::render('Income');
     })->name('income');
-
-    Route::resource('/finance', FinanceRecordController::class);
     
 });
