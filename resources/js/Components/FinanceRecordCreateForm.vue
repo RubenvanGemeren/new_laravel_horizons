@@ -9,21 +9,17 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SelectDropdown from '@/Components/SelectDropdown.vue';
 
 const form = useForm({
-
+    date: '',
+    name: '',
+    type: '',
+    category: '',
+    description: '',
+    amount: '',
+    effective_date: '',
 });
 
 const submit = () => {
-
-    console.log(form);
-
     router.post(route('finance.store'), form);
-
-    // form.post(route('finance.store'), {
-    //     onFinish: () => {
-    //         form.reset();
-    //         router.visit(route('finance.index'));
-    //     },
-    // });
 };
 
 const optionsType = ['Income', 'Expense', 'Saving'];
