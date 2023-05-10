@@ -53,13 +53,15 @@ class FinanceRecordController extends Controller
             $validated['amount'] = intval(floatval($validated['amount']) * 100);
 
             // Turn dates in timetamps
-            $validated['date'] = date('Y-m-d H:i:s', strtotime($validated['date']));
-            $validated['effective_date'] = date('Y-m-d H:i:s', strtotime($validated['effective_date']));
+            $validated['date'] = date('Y-m-d', strtotime($validated['date']));
+            $validated['effective_date'] = date('Y-m-d', strtotime($validated['effective_date']));
 
             // Create record
-            FinanceRecord::updateOrCreate($validated);
-            
-            return redirect()->back()->with('toast', ['success', 'The record has been added.']);
+            $test = FinanceRecord::updateOrCreate($validated);
+
+            $request->session()->flash('toast', ['success', 'The record has been added.']);
+
+            return redirect()->back();
 
             // return to_route('finance.index')->with('test', 'This is a test string');
             // Redirect to the index page with the updated records
@@ -70,7 +72,10 @@ class FinanceRecordController extends Controller
             // return route('finance.index'); //->with('test', 'Record created successfully.')->with('records', $records);
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('toast', ['warning', 'The record has NOT been added, pleas try again.']);
+
+            $request->session()->flash('toast', ['warning', $th->getMessage()]);
+
+            return redirect()->back();
         }
     }
 
