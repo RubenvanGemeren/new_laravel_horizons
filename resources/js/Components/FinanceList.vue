@@ -14,15 +14,15 @@
     const props = defineProps({ records: Array, columns: Array });
 
     const data = computed(() => {
-        var data = [];
+        var dataSet = [];
 
         for (const record of props.records) {
-            data.push(Object.values(record));
+            dataSet.push(Object.values(record));
         }
 
-        return data;
+        return dataSet;
 
-    })
+    });
     
 </script>
 
@@ -48,7 +48,12 @@
 
                 <!-- RECORDS GO HERE -->
                 <div style="background-color: white; padding: 1%;">
-                    <DataTable :columns="columns" class="display">
+                    <DataTable :data="data" class="display">
+                        <thead>
+                            <tr>
+                                <th v-for="column of columns">{{ column }}</th>
+                            </tr>
+                        </thead>
                     </DataTable>
                 </div>
                 
