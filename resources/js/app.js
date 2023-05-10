@@ -11,6 +11,7 @@ import "vue-toastification/dist/index.css";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
+// Set up toastification options
 const options = {
     transition: "Vue-Toastification__slideBlurred",
     maxToasts: 5,
