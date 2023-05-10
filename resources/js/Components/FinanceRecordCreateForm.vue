@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -8,6 +9,8 @@ import Dropdown from '@/Components/Dropdown.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SelectDropdown from '@/Components/SelectDropdown.vue';
 
+let formRef = ref(null);
+
 const form = useForm({
     date: '',
     name: '',
@@ -16,11 +19,19 @@ const form = useForm({
     description: '',
     amount: '',
     effective_date: '',
+},{
+        initialFormValues: formRef,
 });
 
 const submit = () => {
-    router.post(route('finance.store'), form);
+  form.post(route('finance.store'), {
+    preserveScroll: true,
+    onSuccess: () => {
+      form.reset();
+    },
+  });
 };
+// router.post(route('finance.store'), form);
 
 const optionsType = ['Income', 'Expense', 'Saving'];
 const optionsCategory = ['Testing'];
@@ -31,7 +42,7 @@ const optionsCategory = ['Testing'];
     <Head title="Create Finance Record" />
 
 
-        <form @submit.prevent="submit">
+        <form ref="formRef" @submit.prevent="submit">
             <div class="flex flex-row justify-around">
 
                 <div>
@@ -105,6 +116,7 @@ const optionsCategory = ['Testing'];
                             v-model="form.description"
                             type="text"
                             class="my-3 block w-full"
+                            
                             autofocus
                             autocomplete="description"
                         />
