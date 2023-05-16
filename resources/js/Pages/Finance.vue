@@ -2,8 +2,9 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import FinanceList from '@/Components/FinanceList.vue';
     import ToastMessage from '@/Components/ToastMessage.vue';
-    import { computed, onMounted, ref } from 'vue';
-
+    import { computed, onMounted, ref, watch } from 'vue';
+    import { usePage } from '@inertiajs/vue3'
+    
     const props = defineProps({
         records: {
             type: Array,
@@ -13,19 +14,13 @@
             type: Array,
             required: true,
         },
-        toast: {
-            type: Array,
-            required: false,
-        }
     });
 
+    const page = usePage();
+    
     const records = computed(() => {
         return props.records;
-    })
-
-    const toast = computed(() => {
-        return props.toast;
-    })
+    });
 
     const columns = props.columns;
 
@@ -34,7 +29,7 @@
 <template>
     <AppLayout title="Finance">
         <template #header>
-            <ToastMessage v-if="toast" :message="toast[1]" :severity="toast[0]"></ToastMessage>
+            <ToastMessage v-if="$page.props.flash.toast" :message="$page.props.flash.toast[1]" :severity="$page.props.flash.toast[0]" :unix="$page.props.flash.toast[2]"></ToastMessage>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Finance test view
             </h2>
