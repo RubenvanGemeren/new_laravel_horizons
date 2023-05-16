@@ -21,7 +21,6 @@ class FinanceRecordController extends Controller
         return Inertia::render('Finance', [
             'records' => FinanceRecord::select($columns)->get(),
             'columns' => ['Date', 'Name', 'Type', 'Category', 'Description', 'Amount', 'Effective Date'],
-            'toast' => session()->get('toast'),
         ]);
     }
 
@@ -57,23 +56,15 @@ class FinanceRecordController extends Controller
             $validated['effective_date'] = date('Y-m-d', strtotime($validated['effective_date']));
 
             // Create record
-            $test = FinanceRecord::updateOrCreate($validated);
+            $record = FinanceRecord::updateOrCreate($validated);
 
-            $request->session()->flash('toast', ['success', 'The record has been added.']);
+            $request->session()->flash('toast', ['success', 'The record ' . '"' . $record->name. '"' . ' has been added!', time()]);
 
             return redirect()->back();
 
-            // return to_route('finance.index')->with('test', 'This is a test string');
-            // Redirect to the index page with the updated records
-            // dd(redirect()->route('finance.index')->with('success', 'Record created successfully.')->with('records', $records));
-
-            return to_route('finance.index');
-            return Inertia::location(route('finance.index'));
-            // return route('finance.index'); //->with('test', 'Record created successfully.')->with('records', $records);
-
         } catch (\Throwable $th) {
 
-            $request->session()->flash('toast', ['warning', $th->getMessage()]);
+            $request->session()->flash('toast', ['warning', $th->getMessage(), time()]);
 
             return redirect()->back();
         }
