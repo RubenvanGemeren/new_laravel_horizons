@@ -2,6 +2,8 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import FinanceList from '@/Components/FinanceList.vue';
     import ToastMessage from '@/Components/ToastMessage.vue';
+    import FinanceRecordModal from '@/Components/FinanceRecordModal.vue';
+    import PrimaryButton from '@/Components/PrimaryButton.vue';
     import { computed, onMounted, ref, watch } from 'vue';
     import { usePage } from '@inertiajs/vue3'
     
@@ -24,11 +26,23 @@
 
     const columns = props.columns;
 
+    const testRecord = [ 
+        {'name': 'Test'}
+    ]
+
 </script>
 
 <template>
     <AppLayout title="Finance">
         <template #header>
+            <FinanceRecordModal :record="testRecord">
+                    <PrimaryButton
+                        type="button"
+                        class="mr-3"
+                    >
+                        Open Modal
+                    </PrimaryButton>
+            </FinanceRecordModal>
             <ToastMessage v-if="$page.props.flash.toast" :message="$page.props.flash.toast[1]" :severity="$page.props.flash.toast[0]" :unix="$page.props.flash.toast[2]"></ToastMessage>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Finance test view
