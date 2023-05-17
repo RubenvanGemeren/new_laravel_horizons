@@ -9,16 +9,23 @@ import Dropdown from '@/Components/Dropdown.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SelectDropdown from '@/Components/SelectDropdown.vue';
 
+const props = defineProps({
+    record: {
+        type: Object,
+        default: {},
+    },
+});
+
 let formRef = ref(null);
 
 const form = useForm({
-    date: '',
-    name: '',
-    type: '',
-    category: '',
-    description: '',
-    amount: '',
-    effective_date: '',
+    date: props.record['date'] ?? '',
+    name: props.record['name'] ?? '',
+    type: props.record['type'] ?? '',
+    category: props.record['category'] ?? '',
+    description: props.record['description'] ?? '',
+    amount: props.record['amount'] ?? '',
+    effective_date: props.record['effective_date'] ?? '',
 },{
         initialFormValues: formRef,
 });
