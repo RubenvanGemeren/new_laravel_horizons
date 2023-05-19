@@ -18,9 +18,26 @@ class FinanceRecordController extends Controller
 
         $columns = ['date', 'name', 'type', 'category', 'description', 'amount', 'effective_date'];
 
+        $dataTableConfig = [
+            ['text' => "#", 'value' => 'id', 'sortable' => false],
+            ['text' => "Date", 'value' => 'date', 'sortable' => true],
+            ['text' => "Name", 'value' => 'name', 'sortable' => true],
+            ['text' => "Type", 'value' => 'type', 'sortable' => true],
+            ['text' => "Category", 'value' => 'category', 'sortable' => true],
+            ['text' => "Description", 'value' => 'description', 'sortable' => true],
+            ['text' => "Amount", 'value' => 'amount', 'sortable' => true],
+            ['text' => "Effective date", 'value' => 'effective_date', 'sortable' => true],
+        ];
+
+        $databaseColumns = array_map(fn ($item) => $item['value'], $dataTableConfig);
+
+        array_push($dataTableConfig, ['text' => "Operation", 'value' => "operation", 'width' => 20]);
+
+        // return $databaseColumns;
+
         return Inertia::render('Finance', [
-            'records' => FinanceRecord::select($columns)->get(),
-            'columns' => ['Date', 'Name', 'Type', 'Category', 'Description', 'Amount', 'Effective Date'],
+            'records' => FinanceRecord::select($databaseColumns)->get(),
+            'columns' => $dataTableConfig,
         ]);
     }
 
