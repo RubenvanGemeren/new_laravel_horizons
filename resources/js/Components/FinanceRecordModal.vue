@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, nextTick } from 'vue';
+import { ref, reactive, nextTick, computed } from 'vue';
 import DialogModal from './DialogModal.vue';
 import InputError from './InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -20,8 +20,13 @@ const props = defineProps({
     },
 });
 
-console.log(props.record[0]['name']);
-const record = props.record[0];
+const record = computed(() => {
+    if (props.record) {
+        return props.record;
+    }
+});
+
+console.log(record);
 
 const storeRecord = () => {
     form.processing = true;
@@ -38,6 +43,7 @@ const closeModal = () => {
 };
 
 const startShowFianceRecord = () => {
+    console.log("OPENING MODAL");
     showFianceRecord.value = true;
 }
 </script>
@@ -50,13 +56,11 @@ const startShowFianceRecord = () => {
 
         <DialogModal :maxWidth="'5xl'" :show="showFianceRecord" @close="closeModal">
             <template #title>
-                {{ title }}
+                <p>Record:  "{{ title }}"</p>
             </template>
 
             <template #content>
-
                 <RecordCreateForm :record="record"/>
-                
             </template>
 
             <template #footer>
