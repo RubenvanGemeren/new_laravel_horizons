@@ -19,13 +19,13 @@ const props = defineProps({
 let formRef = ref(null);
 
 const form = useForm({
-    date: props.record['date'] ?? '',
+    date: props.record['date'] ? (props.record['date'].split(" "))[0] : '',
     name: props.record['name'] ?? '',
     type: props.record['type'] ?? '',
     category: props.record['category'] ?? '',
     description: props.record['description'] ?? '',
-    amount: props.record['amount'] ?? '',
-    effective_date: props.record['effective_date'] ?? '',
+    amount: props.record['amount'] ? props.record['amount'].toString() : '',
+    effective_date: props.record['effective_date'] ? (props.record['effective_date'].split(" "))[0] : '',
 },{
         initialFormValues: formRef,
 });
