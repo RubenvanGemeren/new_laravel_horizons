@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FinanceRecord;
 use App\Models\Income;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -90,7 +91,7 @@ class FinanceRecordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Income $income)
+    public function show(FinanceRecord $record)
     {
         //
     }
@@ -98,7 +99,7 @@ class FinanceRecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Income $income)
+    public function edit(FinanceRecord $record)
     {
         //
     }
@@ -106,16 +107,59 @@ class FinanceRecordController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Income $income)
+    public function update(Request $request, $recordId)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'date' => ['required', 'date'],
+                'name' => ['required', 'max:200'],
+                'type' => ['required', 'string'],
+                'category' => ['required', 'string'],
+                'description' => ['nullable', 'max:500'],
+                'amount' => ['required', 'decimal:0,2'],
+                'effective_date' => ['required', 'date'],
+            ]);
+
+            // Turn amount to cents
+            $validated['amount'] = intval(floatval($validated['amount']) * 100);
+
+            // Turn dates in timetamps
+            $validated['date'] = date('Y-m-d', strtotime($validated['date']));
+            $validated['effective_date'] = date('Y-m-d', strtotime($validated['effective_date']));
+
+            // Update record
+            FinanceRecord::find($recordId)->update($validated);
+
+            $request->session()->flash('toast', ['info', 'The record ' . '"' . $validated['name']. '"' . ' has been updated!', time()]);
+
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+
+            $request->session()->flash('toast', ['warning', $th->getMessage(), time()]);
+
+            return redirect()->back();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Income $income)
+    public function destroy(Request $request, $recordId)
     {
-        //
+        try {
+            // Delete record
+            FinanceRecord::find($recordId)->delete();
+
+            $request->session()->flash('toast', ['error', 'The record ' . '"' . $request->name. '"' . ' has been deleted!', time()]);
+
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+
+            $request->session()->flash('toast', ['warning', $th->getMessage(), time()]);
+
+            return redirect()->back();
+        }
     }
 }
