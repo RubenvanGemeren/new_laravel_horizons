@@ -57,23 +57,13 @@ const startShowFianceRecord = () => {
         <DialogModal :maxWidth="'5xl'" :show="showFianceRecord" @close="closeModal">
             <template #title>
                 <p>Record:  "{{ title }}"</p>
+                <SecondaryButton @click="closeModal">
+                        Cancel
+                </SecondaryButton>
             </template>
 
             <template #content>
                 <RecordCreateForm :record="record"/>
-            </template>
-
-            <template #footer>
-                    <SecondaryButton @click="closeModal">
-                        Cancel
-                    </SecondaryButton>
-    
-                    <PrimaryButton
-                        class="ml-3"
-                        @click="storeRecord"
-                    >
-                        Save
-                    </PrimaryButton>
             </template>
         </DialogModal>
     </span>

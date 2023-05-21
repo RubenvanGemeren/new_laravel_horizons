@@ -31,7 +31,7 @@ const close = () => {
         @close="close"
     >
         <div class="px-6 py-4">
-            <div class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <div class="flex justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
                 <slot name="title" />
             </div>
 
