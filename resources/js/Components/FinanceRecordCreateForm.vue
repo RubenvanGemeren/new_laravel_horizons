@@ -36,27 +36,31 @@ const form = useForm({
 
 const submit = () => {
 
-    const options = {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-        },
-    };
-
     switch (submitType.value) {
         case 'update':
-            form.patch(route('finance' + '.' + submitType.value, props.record), options);
+            form.patch(route('finance' + '.' + submitType.value, props.record), {
+                preserveScroll: true,
+            });
             break;
         case 'destroy':
-            form.delete(route('finance' + '.' + submitType.value, props.record), options);
+            form.delete(route('finance' + '.' + submitType.value, props.record), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    form.reset();
+                },
+            });
             break;
             
         default:
-            form.post(route('finance' + '.' + submitType.value), options);
+            form.post(route('finance' + '.' + submitType.value), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    form.reset();
+                },
+            });
             break;
     }
 };
-// router.post(route('finance.store'), form);
 
 const optionsType = ['Income', 'Expense', 'Saving'];
 const optionsCategory = ['Testing'];
@@ -65,6 +69,10 @@ console.log(props.record);
 
 function setSubmitType(type) {
     submitType.value = type;
+}
+
+function setEffectiveDate(date) {
+    form.effective_date = date;
 }
 
 </script>
@@ -80,6 +88,7 @@ function setSubmitType(type) {
                     <div>
                         <InputLabel for="date" value="Date" />
                         <TextInput
+                            @change="setEffectiveDate(form.date)"
                             id="date"
                             v-model="form.date"
                             type="date"
