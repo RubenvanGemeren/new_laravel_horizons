@@ -101,13 +101,6 @@
                             </div>
                         </template>
                     </Vue3EasyDataTable>
-                    <!-- <DataTable ref="table" :data="data" class="display">
-                        <thead>
-                            <tr>
-                                <th v-for="column of columns">{{ column }}</th>
-                            </tr>
-                        </thead>
-                    </DataTable> -->
                 </div>
                 
             </div>
