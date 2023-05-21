@@ -16,7 +16,11 @@ const props = defineProps({
     },
 });
 
+let showRecord = JSON.stringify(props.record) !== "{}";
+
 let formRef = ref(null);
+
+let submitType = ref(null);
 
 const form = useForm({
     date: props.record['date'] ? (props.record['date'].split(" "))[0] : '',
@@ -24,30 +28,49 @@ const form = useForm({
     type: props.record['type'] ?? '',
     category: props.record['category'] ?? '',
     description: props.record['description'] ?? '',
-    amount: props.record['amount'] ? props.record['amount'].toString() : '',
+    amount: props.record['amount'] ? (props.record['amount'] / 100).toString() : '',
     effective_date: props.record['effective_date'] ? (props.record['effective_date'].split(" "))[0] : '',
 },{
         initialFormValues: formRef,
 });
 
 const submit = () => {
-  form.post(route('finance.store'), {
-    preserveScroll: true,
-    onSuccess: () => {
-      form.reset();
-    },
-  });
+
+    const options = {
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset();
+        },
+    };
+
+    switch (submitType.value) {
+        case 'update':
+            form.patch(route('finance' + '.' + submitType.value, props.record), options);
+            break;
+        case 'destroy':
+            form.delete(route('finance' + '.' + submitType.value, props.record), options);
+            break;
+            
+        default:
+            form.post(route('finance' + '.' + submitType.value), options);
+            break;
+    }
 };
 // router.post(route('finance.store'), form);
 
 const optionsType = ['Income', 'Expense', 'Saving'];
 const optionsCategory = ['Testing'];
 
+console.log(props.record);
+
+function setSubmitType(type) {
+    submitType.value = type;
+}
+
 </script>
 
 <template>
     <Head title="Create Finance Record" />
-
 
         <form ref="formRef" @submit.prevent="submit">
             <div class="flex flex-row justify-around">
@@ -167,7 +190,13 @@ const optionsCategory = ['Testing'];
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <SecondaryButton @click="setSubmitType('destroy')" v-if="showRecord" :type="'submit'" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Delete
+                </SecondaryButton >
+                <PrimaryButton @click="setSubmitType('update')" v-if="showRecord" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Update
+                </PrimaryButton >
+                <PrimaryButton @click="setSubmitType('store')" v-if="!showRecord" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Save
                 </PrimaryButton>
             </div>
