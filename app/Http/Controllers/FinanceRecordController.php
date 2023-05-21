@@ -130,7 +130,7 @@ class FinanceRecordController extends Controller
             // Update record
             FinanceRecord::find($recordId)->update($validated);
 
-            $request->session()->flash('toast', ['info', 'The record ' . '"' . $validated['name']. '"' . ' has been updated!', time()]);
+            $request->session()->flash('toast', ['success', 'The record ' . '"' . $validated['name']. '"' . ' has been updated!', time()]);
 
             return redirect()->back();
 
