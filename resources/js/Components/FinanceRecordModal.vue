@@ -7,8 +7,6 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from './TextInput.vue';
 import RecordCreateForm from '@/Components/FinanceRecordCreateForm.vue';
 
-const emit = defineEmits(['confirmed']);
-
 const props = defineProps({
     title: {
         type: String,
@@ -63,8 +61,10 @@ const startShowFianceRecord = () => {
             </template>
 
             <template #content>
-                <RecordCreateForm :record="record"/>
+                <RecordCreateForm :record="record" @close="closeModal"/>
+                {{ showFianceRecord }}
             </template>
         </DialogModal>
     </span>
+
 </template>

@@ -13,8 +13,10 @@ const props = defineProps({
     record: {
         type: Object,
         default: {},
-    },
+    }
 });
+
+const emit = defineEmits(['closeModal']);
 
 let showRecord = JSON.stringify(props.record) !== "{}";
 
@@ -49,6 +51,8 @@ const submit = () => {
                     form.reset();
                 },
             });
+
+            emit('closeModal'); // Emitting the closeModal event to the parent component
             break;
             
         default:
@@ -74,7 +78,6 @@ function setSubmitType(type) {
 function setEffectiveDate(date) {
     form.effective_date = date;
 }
-
 </script>
 
 <template>
