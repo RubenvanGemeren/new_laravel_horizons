@@ -45,14 +45,14 @@ const submit = () => {
             });
             break;
         case 'destroy':
+            
             form.delete(route('finance' + '.' + submitType.value, props.record), {
                 preserveScroll: true,
                 onSuccess: () => {
+                    closeModal();
                     form.reset();
                 },
             });
-
-            emit('closeModal'); // Emitting the closeModal event to the parent component
             break;
             
         default:
@@ -78,6 +78,10 @@ function setSubmitType(type) {
 function setEffectiveDate(date) {
     form.effective_date = date;
 }
+
+const closeModal = () => {
+    emit('close-modal');
+};
 </script>
 
 <template>
