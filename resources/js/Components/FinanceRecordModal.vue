@@ -45,7 +45,6 @@ const startShowFianceRecord = () => {
     showFianceRecord.value = true;
 }
 </script>
-
 <template>
     <span>
         <span @click="startShowFianceRecord">
@@ -61,8 +60,7 @@ const startShowFianceRecord = () => {
             </template>
 
             <template #content>
-                <RecordCreateForm :record="record" @close="closeModal"/>
-                {{ showFianceRecord }}
+                <RecordCreateForm @close-modal="closeModal" :record="record"/>    
             </template>
         </DialogModal>
     </span>
