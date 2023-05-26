@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppDashboardController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceRecordController;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+    // Finance
+    Route::resource('/dashboard', AppDashboardController::class);
 
     // Finance
     Route::resource('/finance', FinanceRecordController::class);

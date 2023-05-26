@@ -48,18 +48,21 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('home')" :active="route().current('home')">
-                                    Home
+                                <NavLink :href="route('dashboard.index')" :active="route().current('dashboard.index') ">
+                                    Dashboard
                                 </NavLink>
+                                <!-- <NavLink :href="route('home')" :active="route().current('home')">
+                                    Home
+                                </NavLink> -->
                                 <NavLink :href="route('income')" :active="route().current('income')">
                                     Income
                                 </NavLink>
-                                <NavLink :href="route('home')" :active="route().current('home')">
+                                <!-- <NavLink :href="route('home')" :active="route().current('home')">
                                     Expenses
                                 </NavLink>
                                 <NavLink :href="route('home')" :active="route().current('home')">
                                     Savings
-                                </NavLink>
+                                </NavLink> -->
                                 <NavLink :href="route('finance.index')" :active="route().current('finance.index')">
                                     Finances
                                 </NavLink>
