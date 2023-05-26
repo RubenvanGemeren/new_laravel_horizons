@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FinanceCategory;
+use App\Models\FinanceRecord;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -116,10 +117,29 @@ class FinanceCategoryController extends Controller
     public function destroy(Request $request, $recordId)
     {
         try {
-            // Delete record
-            FinanceCategory::find($recordId)->delete();
 
-            $request->session()->flash('toast', ['error', 'The category ' . '"' . $request->name. '"' . ' has been deleted!', time()]);
+            $category = FinanceCategory::find($recordId);
+
+            // Delete record
+            $category->delete();
+
+            // dd(FinanceRecord::where('category_id' , $category->id)->get());
+
+            $relatedFinanceRecords = FinanceRecord::where('category_id' , $category->id)->get();
+            // Set all finance records with same id as null
+            foreach ($relatedFinanceRecords as $record) {
+                $record->update(['category_id' => null]);
+            }
+
+            $request->session()->flash('toast', ['error', 
+                'The category ' 
+                . '"' 
+                . $request->name 
+                . '"' 
+                . ' has been deleted! and ' 
+                . $relatedFinanceRecords->count() 
+                . ' record(s) have been affected' 
+                , time()]);
 
             return redirect()->back();
 
