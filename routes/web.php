@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceRecordController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+    // Finance
     Route::resource('/finance', FinanceRecordController::class);
+    
+    // Categories
+    Route::resource('/category', FinanceCategoryController::class);
 
     // Home route
     Route::get('/home', function () {
