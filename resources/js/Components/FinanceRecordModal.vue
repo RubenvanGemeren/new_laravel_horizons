@@ -16,12 +16,20 @@ const props = defineProps({
         type: Object,
         default: {},
     },
+    categories: {
+        type: Array,
+        required: true,
+    }
 });
 
 const record = computed(() => {
     if (props.record) {
         return props.record;
     }
+});
+
+const categories = computed(() => {
+    return props.categories;
 });
 
 console.log(record);
@@ -60,7 +68,7 @@ const startShowFianceRecord = () => {
             </template>
 
             <template #content>
-                <RecordCreateForm @close-modal="closeModal" :record="record"/>    
+                <RecordCreateForm @close-modal="closeModal" :record="record" :categories="categories" />    
             </template>
         </DialogModal>
     </span>

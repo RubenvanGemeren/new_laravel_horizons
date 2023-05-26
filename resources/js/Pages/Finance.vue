@@ -14,12 +14,20 @@
             type: Array,
             required: true,
         },
+        categories: {
+            type: Array,
+            required: true,
+        }
     });
 
     const page = usePage();
     
     const records = computed(() => {
         return props.records;
+    });
+
+    const categories = computed(() => {
+        return props.categories;
     });
 
     const columns = props.columns;
@@ -38,7 +46,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                    <FinanceList :columns="columns" :records="records" />
+                    <FinanceList :columns="columns" :records="records" :categories="categories" />
                 </div>
             </div>
         </div>
