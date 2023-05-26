@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -13,6 +13,10 @@ const props = defineProps({
     record: {
         type: Object,
         default: {},
+    },
+    categories: {
+        type: Array,
+        required: true,
     }
 });
 
@@ -45,7 +49,6 @@ const submit = () => {
             });
             break;
         case 'destroy':
-            
             form.delete(route('finance' + '.' + submitType.value, props.record), {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -67,9 +70,23 @@ const submit = () => {
 };
 
 const optionsType = ['Income', 'Expense', 'Saving'];
-const optionsCategory = ['Testing'];
 
-console.log(props.record);
+const optionsCategory = computed(() => {
+    return props.categories;
+    // var dataSet = [];
+
+    // for (const category of props.categories) {
+    //     console.log(category);
+    //     dataSet.push(category);
+    // }
+
+    // return dataSet;
+
+});
+
+// const optionsCategory = ['test'];
+
+// console.log(optionsCategory2);
 
 function setSubmitType(type) {
     submitType.value = type;

@@ -1,20 +1,11 @@
 <script setup>
     import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-    import RecordCreateForm from '@/Components/FinanceRecordCreateForm.vue';
-    import DataTable from 'datatables.net-vue3';
-    import DataTablesCore from 'datatables.net';
+    import FinanceRecordCreateForm from '@/Components/FinanceRecordCreateForm.vue';
     import FinanceRecordModal from '@/Components/FinanceRecordModal.vue';
     import PrimaryButton from '@/Components/PrimaryButton.vue';
-    // import 'datatables.net-buttons-dt';
-    // import 'datatables.net-buttons/js/buttons.html5.mjs';
-    import 'datatables.net-responsive-dt';
-    import 'datatables.net-select-dt';
-    
     import Vue3EasyDataTable from 'vue3-easy-data-table';
     import 'vue3-easy-data-table/dist/style.css';
     import { computed, onMounted, ref, watch } from 'vue';
-
-    DataTable.use(DataTablesCore);
 
     const props = defineProps({ 
         records: {
@@ -25,7 +16,15 @@
         columns: {
             type: Array,
             required: true
-        } 
+        },
+        categories: {
+            type: Array,
+            required: true,
+        }
+    });
+
+    const categories = computed(() => {
+        return props.categories;
     });
 
     const data = computed(() => {
@@ -50,7 +49,7 @@
     <div>
         <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
             <ApplicationLogo class="block h-12 w-auto pb-5" />
-            <RecordCreateForm/>
+            <FinanceRecordCreateForm :categories="categories"/>
         </div>
 
         <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
@@ -95,7 +94,7 @@
                         </template>
                         <template #item-operation="item">
                             <div class="operation-wrapper">
-                                <FinanceRecordModal :title="item.name" :record="item">
+                                <FinanceRecordModal :title="item.name" :record="item" :categories="categories">
                                     <p style="cursor: pointer;">Edit</p>
                                 </FinanceRecordModal>
                             </div>
@@ -107,7 +106,3 @@
         </div>
     </div>
 </template>
-
-<style>
-    @import 'datatables.net-dt';
-</style>
