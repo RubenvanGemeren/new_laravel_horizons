@@ -105,7 +105,6 @@
                     </svg>
                     <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-white">
                         <a href="https://laravel.com/docs">Records</a>
-                        <p>{{  getColorName() }}</p>
                     </h2>
                 </div>
 
