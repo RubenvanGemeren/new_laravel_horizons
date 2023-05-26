@@ -14,4 +14,16 @@ class FinanceRecord extends Model
     protected $guarded = [
         //
     ];
+
+
+    /**
+     * 
+     *  Relations
+     * 
+     */
+    public function Category()
+    {
+        return $this->belongsTo(FinanceCategory::class);
+    }
+    
 }

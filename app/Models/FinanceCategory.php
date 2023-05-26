@@ -14,4 +14,14 @@ class FinanceCategory extends Model
     protected $guarded = [
         //
     ];
+
+     /**
+     * 
+     *  Relations
+     * 
+     */
+    public function financeRecords()
+    {
+        return $this->hasMany(FinanceRecord::class, 'category_id', 'id');
+    }
 }
