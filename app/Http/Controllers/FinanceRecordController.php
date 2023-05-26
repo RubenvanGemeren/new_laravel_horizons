@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FinanceCategory;
 use App\Models\FinanceRecord;
 use App\Models\Income;
 use Illuminate\Http\Request;
@@ -16,9 +17,6 @@ class FinanceRecordController extends Controller
      */
     public function index()
     {   
-
-        $columns = ['date', 'name', 'type', 'category', 'description', 'amount', 'effective_date'];
-
         $dataTableConfig = [
             ['text' => "#", 'value' => 'id', 'sortable' => false],
             ['text' => "Date", 'value' => 'date', 'sortable' => true],
@@ -36,9 +34,12 @@ class FinanceRecordController extends Controller
 
         // return $databaseColumns;
 
+        // return FinanceCategory::pluck('name');
+
         return Inertia::render('Finance', [
             'records' => FinanceRecord::select($databaseColumns)->get(),
             'columns' => $dataTableConfig,
+            'categories' => FinanceCategory::pluck('name'),
         ]);
     }
 
