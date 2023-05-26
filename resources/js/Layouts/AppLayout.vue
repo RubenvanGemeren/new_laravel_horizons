@@ -58,10 +58,13 @@ const logout = () => {
                                     Expenses
                                 </NavLink>
                                 <NavLink :href="route('home')" :active="route().current('home')">
-                                    Saving
+                                    Savings
                                 </NavLink>
                                 <NavLink :href="route('finance.index')" :active="route().current('finance.index')">
-                                    Finance
+                                    Finances
+                                </NavLink>
+                                <NavLink :href="route('category.index')" :active="route().current('category.index')">
+                                    Categories
                                 </NavLink>
                             </div>
                         </div>
