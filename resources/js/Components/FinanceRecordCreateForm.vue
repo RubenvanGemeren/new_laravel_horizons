@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SelectDropdown from '@/Components/SelectDropdown.vue';
+import { pageHeaderProps } from 'naive-ui';
 
 const props = defineProps({
     record: {
@@ -28,14 +29,18 @@ let formRef = ref(null);
 
 let submitType = ref(null);
 
+const today = new Date().toISOString().substring(0, 10);
+
+console.log(today.toString());
+
 const form = useForm({
-    date: props.record['date'] ? (props.record['date'].split(" "))[0] : '',
+    date: props.record['date'] ? (props.record['date'].split(" "))[0] : today,
     name: props.record['name'] ?? '',
     type: props.record['type'] ?? '',
-    category: props.record['category'] ?? '',
+    category_id: props.record['category'] ?? '',
     description: props.record['description'] ?? '',
     amount: props.record['amount'] ? (props.record['amount'] / 100).toString() : '',
-    effective_date: props.record['effective_date'] ? (props.record['effective_date'].split(" "))[0] : '',
+    effective_date: props.record['effective_date'] ? (props.record['effective_date'].split(" "))[0] : today,
 },{
         initialFormValues: formRef,
 });
@@ -158,17 +163,17 @@ const closeModal = () => {
                 <div>
                     <!-- CATEGORY -->
                     <div>
-                        <InputLabel for="category" value="Category" />
+                        <InputLabel for="category_id" value="Category" />
                         <SelectDropdown 
-                            id="category"
-                            v-model="form.category"
+                            id="category_id"
+                            v-model="form.category_id"
                             :options="optionsCategory"
                             class="my-3 block w-full"
                             
                             autofocus
-                            autocomplete="category"
+                            autocomplete="category_id"
                         />
-                        <InputError class="mt-2" :message="form.errors.category" />
+                        <InputError class="mt-2" :message="form.errors.category_id" />
                     </div>
         
                     <!-- DESCRIPTION -->
