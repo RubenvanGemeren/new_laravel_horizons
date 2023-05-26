@@ -6,10 +6,12 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import Toast from "vue-toastification";
-import Vue3EasyDataTable from 'vue3-easy-data-table';
-import 'vue3-easy-data-table/dist/style.css';
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
+import Vue3EasyDataTable from 'vue3-easy-data-table';
+import 'vue3-easy-data-table/dist/style.css';
+import tinycolor from "tinycolor2";
+
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -29,6 +31,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(Toast, options)
             .use(Vue3EasyDataTable)
+            .use(tinycolor)
             .mount(el);
     },
     progress: {
