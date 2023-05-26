@@ -37,7 +37,7 @@ const form = useForm({
     date: props.record['date'] ? (props.record['date'].split(" "))[0] : today,
     name: props.record['name'] ?? '',
     type: props.record['type'] ?? '',
-    category_id: props.record['category'] ?? '',
+    category_id: props.record['category_id'] ?? '',
     description: props.record['description'] ?? '',
     amount: props.record['amount'] ? (props.record['amount'] / 100).toString() : '',
     effective_date: props.record['effective_date'] ? (props.record['effective_date'].split(" "))[0] : today,

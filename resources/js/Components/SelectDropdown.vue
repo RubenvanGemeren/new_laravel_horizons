@@ -33,6 +33,7 @@ defineExpose({ focus: () => input.value && input.value.focus() });
     @change="emitUpdate"
   >
     <option disabled value="">Please select one</option>
+    <option value="null">None</option>
     <option v-for="option in props.options" :value="option">{{ option }}</option>
   </select>
 </template>
