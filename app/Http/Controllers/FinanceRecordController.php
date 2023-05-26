@@ -17,12 +17,14 @@ class FinanceRecordController extends Controller
      */
     public function index()
     {   
+
+        // return FinanceRecord::with('category')->first();
         $dataTableConfig = [
             ['text' => "#", 'value' => 'id', 'sortable' => false],
             ['text' => "Date", 'value' => 'date', 'sortable' => true],
             ['text' => "Name", 'value' => 'name', 'sortable' => true],
             ['text' => "Type", 'value' => 'type', 'sortable' => true],
-            ['text' => "Category", 'value' => 'category', 'sortable' => true],
+            ['text' => "Category", 'value' => 'category_id', 'sortable' => true],
             ['text' => "Description", 'value' => 'description', 'sortable' => true],
             ['text' => "Amount", 'value' => 'amount', 'sortable' => true],
             ['text' => "Effective date", 'value' => 'effective_date', 'sortable' => true],
@@ -61,11 +63,15 @@ class FinanceRecordController extends Controller
                 'date' => ['required', 'date'],
                 'name' => ['required', 'max:200'],
                 'type' => ['required', 'string'],
-                'category' => ['required', 'string'],
+                'category_id' => ['nullable'],
                 'description' => ['nullable', 'max:500'],
                 'amount' => ['required', 'decimal:0,2'],
                 'effective_date' => ['required', 'date'],
             ]);
+
+            // Get Category
+            $categoryId = FinanceCategory::where('name', '=', $validated['category_id'])->get()[0]['id'] ?? null;
+            $validated['category_id'] = $categoryId;
 
             // Turn amount to cents
             $validated['amount'] = intval(floatval($validated['amount']) * 100);
@@ -115,11 +121,15 @@ class FinanceRecordController extends Controller
                 'date' => ['required', 'date'],
                 'name' => ['required', 'max:200'],
                 'type' => ['required', 'string'],
-                'category' => ['required', 'string'],
+                'category_id' => ['nullable', 'string'],
                 'description' => ['nullable', 'max:500'],
                 'amount' => ['required', 'decimal:0,2'],
                 'effective_date' => ['required', 'date'],
             ]);
+
+            // Get Category
+            $categoryId = FinanceCategory::where('name', '=', $validated['category_id'])->get()[0]['id'] ?? null;
+            $validated['category_id'] = strval($categoryId);
 
             // Turn amount to cents
             $validated['amount'] = intval(floatval($validated['amount']) * 100);
